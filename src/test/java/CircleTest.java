@@ -42,10 +42,18 @@ class CircleTest {
     }
 
     @Test
-    void existsConstructorInFuncionario() throws ClassNotFoundException, NoSuchMethodException {
+    void existsConstructor() throws ClassNotFoundException, NoSuchMethodException {
         Class<?> clazz = Class.forName("Circle");
         Constructor<?> constructor = clazz.getDeclaredConstructor(float.class);
         assertNotNull(constructor);
+    }
+
+    @Test()
+    void notExistsEmptyConstructor() throws ClassNotFoundException, NoSuchMethodException {
+        Class<?> clazz = Class.forName("Circle");
+        assertThrows(NoSuchMethodException.class, () -> {
+            clazz.getDeclaredConstructor();
+        });
     }
 
     @Test
