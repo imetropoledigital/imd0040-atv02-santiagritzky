@@ -1,0 +1,121 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: CircleTest.existsCircle
+      id: circletest-existscircle
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.existsCircle
+        setup-command: ''
+        command: gradle test --tests CircleTest.existsCircle
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.existsAttrRadius
+      id: circletest-existsattrradius
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.existsAttrRadius
+        setup-command: ''
+        command: gradle test --tests CircleTest.existsAttrRadius
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.existsMethodArea
+      id: circletest-existsmethodarea
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.existsMethodArea
+        setup-command: ''
+        command: gradle test --tests CircleTest.existsMethodArea
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.existsMethodCircumference
+      id: circletest-existsmethodcircumference
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.existsMethodCircumference
+        setup-command: ''
+        command: gradle test --tests CircleTest.existsMethodCircumference
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.existsConstructor
+      id: circletest-existsconstructor
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.existsConstructor
+        setup-command: ''
+        command: gradle test --tests CircleTest.existsConstructor
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.assertCalculationArea
+      id: circletest-assertcalculationarea
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.assertCalculationArea
+        setup-command: ''
+        command: gradle test --tests CircleTest.assertCalculationArea
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.assertCalculationArea0
+      id: circletest-assertcalculationarea0
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.assertCalculationArea0
+        setup-command: ''
+        command: gradle test --tests CircleTest.assertCalculationArea0
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.assertCalculationCirc10
+      id: circletest-assertcalculationcirc10
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.assertCalculationCirc10
+        setup-command: ''
+        command: gradle test --tests CircleTest.assertCalculationCirc10
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.assertCalculationCirc0
+      id: circletest-assertcalculationcirc0
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.assertCalculationCirc0
+        setup-command: ''
+        command: gradle test --tests CircleTest.assertCalculationCirc0
+        timeout: 10
+        max-score: 1
+    - name: CircleTest.notExistsEmptyConstructor
+      id: circletest-notexistsemptyconstructor
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: CircleTest.notExistsEmptyConstructor
+        setup-command: ''
+        command: gradle test --tests CircleTest.notExistsEmptyConstructor
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        CIRCLETEST-EXISTSCIRCLE_RESULTS: "${{steps.circletest-existscircle.outputs.result}}"
+        CIRCLETEST-EXISTSATTRRADIUS_RESULTS: "${{steps.circletest-existsattrradius.outputs.result}}"
+        CIRCLETEST-EXISTSMETHODAREA_RESULTS: "${{steps.circletest-existsmethodarea.outputs.result}}"
+        CIRCLETEST-EXISTSMETHODCIRCUMFERENCE_RESULTS: "${{steps.circletest-existsmethodcircumference.outputs.result}}"
+        CIRCLETEST-EXISTSCONSTRUCTOR_RESULTS: "${{steps.circletest-existsconstructor.outputs.result}}"
+        CIRCLETEST-ASSERTCALCULATIONAREA_RESULTS: "${{steps.circletest-assertcalculationarea.outputs.result}}"
+        CIRCLETEST-ASSERTCALCULATIONAREA0_RESULTS: "${{steps.circletest-assertcalculationarea0.outputs.result}}"
+        CIRCLETEST-ASSERTCALCULATIONCIRC10_RESULTS: "${{steps.circletest-assertcalculationcirc10.outputs.result}}"
+        CIRCLETEST-ASSERTCALCULATIONCIRC0_RESULTS: "${{steps.circletest-assertcalculationcirc0.outputs.result}}"
+        CIRCLETEST-NOTEXISTSEMPTYCONSTRUCTOR_RESULTS: "${{steps.circletest-notexistsemptyconstructor.outputs.result}}"
+      with:
+        runners: circletest-existscircle,circletest-existsattrradius,circletest-existsmethodarea,circletest-existsmethodcircumference,circletest-existsconstructor,circletest-assertcalculationarea,circletest-assertcalculationarea0,circletest-assertcalculationcirc10,circletest-assertcalculationcirc0,circletest-notexistsemptyconstructor
